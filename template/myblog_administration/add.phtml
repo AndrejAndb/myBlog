@@ -1,0 +1,46 @@
+<?php 
+$this->headScript()->appendFile('/lib/jquery/jquery-1.7.1.js');
+$this->headScript()->appendFile('/lib/ace/ace-bookmarklet.js');
+$this->headScript()->appendFile('/lib/jquery.tagsinput/jquery.tagsinput.js');
+$this->headLink()->appendStylesheet('/lib/jquery.tagsinput/jquery.tagsinput.css');
+?>
+<?php $this->headScript()->captureStart();?>
+$(function(){
+    var ace = window.__ace_shadowed__;
+    
+    var baseUrl = "/lib/ace/";
+    var aceLoader = window.__ace_loader__ = function(path, module, callback) {
+        var head = document.getElementsByTagName('head')[0];
+        var s = document.createElement('script');
+    
+        s.src = baseUrl + path;
+        head.appendChild(s);
+        
+        s.onload = function() {
+            window.__ace_shadowed__.require([module], callback);
+        };
+    };
+
+    
+    ace.require(["ace/ext/textarea"], function(){
+        $('textarea').each(function(){
+            textAce = ace.transformTextarea(this, aceLoader);
+            textAce.setDisplaySettings(false);
+            textAce.setOption('mode', 'html');
+            textAce.setOption('gutter', 'true');
+        });
+    });
+})
+
+$(function(){
+    $('input[name="tags"]').tagsInput({
+       //autocomplete_url:'http://myserver.com/api/autocomplete',
+       //autocomplete:{selectFirst:true,width:'100px',autoFill:true}
+    });
+});
+
+<?php $this->headScript()->captureEnd() ?>
+<a href="<?php echo $this->url('Administration')?>">Вернуться</a>
+<div class="addFeed">
+    <?php echo $form ?>
+</div>

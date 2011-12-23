@@ -1,0 +1,70 @@
+<style type="text/css">
+    .feed-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0px;
+    }
+    .feed-table th {
+        padding: 2px;
+        border-bottom: 2px solid gray;
+        border-top: 2px solid gray;
+    }
+    .feed-table td {
+        padding: 2px;
+        border-bottom: 1px solid gray;
+        border-right: 1px solid gray;
+    }
+    .feed-table .id {
+        width: 5%;
+        text-align: center;
+    }
+    .feed-table .slug {
+        width: 20%;
+    }
+    .feed-table .title {
+        width: 45%;
+    }
+    .feed-table .created {
+        width: 10%;
+        text-align: center;
+    }
+    .feed-table .modified {
+        width: 10%;
+        text-align: center;
+    }
+    .feed-table .adm {
+        width: 10%;
+        border-right: 0px;
+    }
+    .unpublished td {
+        background: wheat;
+    }
+</style>
+<a href="<?php echo $this->url('Administration', array('action'=>'add')) ?>">Добавить запись</a>
+<table class="feed-table">
+    <thead>
+        <tr>
+            <th class="id">Id</th>
+            <th class="slug">Slug</th>
+            <th class="title">Title</th>
+            <th class="created">Создан</th>
+            <th class="modified">Изменен</th>
+            <th class="adm"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->feed as $f): ?>
+        <tr<?php if(!$f['published']) echo ' class="unpublished"' ?>>
+            <td class="id"><?php echo $f['id'] ?></td>
+            <td class="slug"><?php echo $f['slug'] ?></td>
+            <td class="title"><?php echo $f['title'] ?></td>
+            <td class="created"><?php echo date('d.m.Y H:i', $f['createdStamp']) ?></td>
+            <td class="modified"><?php echo date('d.m.Y H:i', $f['modifiedStamp']) ?></td>
+            <td class="adm">
+                <a href="<?php echo $this->url('Administration', array('action'=>'edit', 'id'=>$f['id'])) ?>">Изменить</a> |
+                <a href="<?php echo $this->url('Administration', array('action'=>'delete', 'id'=>$f['id'])) ?>">Удалить</a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
