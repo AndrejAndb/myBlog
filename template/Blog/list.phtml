@@ -1,0 +1,54 @@
+<?php
+$this->headLink()->appendStylesheet('/style/post.css');
+?>
+<h1 class="page-title">
+    <?php echo $this->title ?>
+    <?php if($this->tags !== null):?>
+        <?php 
+            $tagsArr = array(); 
+            foreach($this->tags->getItemList() as $tag) {
+               $tagsArr[] = '<a href="'.$this->url('Home/tags', array('tags'=>$tag->getTitle())).'" class="tag">'.$tag->getTitle().'</a>'; 
+            }
+            echo implode(', ', $tagsArr);
+         ?>
+    <?php endif; ?>
+</h1>
+<div class="posts">
+    <?php foreach($this->posts as $p): ?>
+    <div class="post">
+        <h2 class="postTitle"><a href="<?php echo $this->url('Home/post', array('slug'=>$p['slug']))?>"><?php echo $p['title'] ?></a></h2>
+        <div class="post-property">
+            <ul class="layout">
+                <?php $date = date('d.m.Y', $p['createdStamp']);  ?>
+                <?php $dateM = date('d.m.Y', $p['modifiedStamp']) ?>
+                <?php if($dateM != $date): ?>
+                <li class="modify-data">
+                    <span class="title">Изменен:</span> <?php echo $dateM; ?>
+                </li>
+                <?php endif; ?>
+                <li class="create-data">
+                    <span class="title">Опубликован:</span> <?php echo $date; ?>
+                </li>
+            </ul>
+        </div>
+        <div class="content short-content">
+            <?php echo $p['short'] ?>
+        </div>
+        <div class="more">
+            <a href="<?php echo $this->url('Home/post', array('slug'=>$p['slug']))?>">Далее...</a>
+        </div>
+        <?php
+            $tags = array(); 
+            foreach($p['tags'] as $tag){
+               $tags[] = '<a href="'.$this->url('Home/tags', array('tags'=>$tag->getTitle())).'" class="tag">'.$tag->getTitle().'</a>'; 
+            }
+        ?>
+        <?php if(count($tags)>0):?>
+        <div class="post-tags">
+            <span class="title">Тэги:</span>
+            <?php echo implode(', ', $tags); ?>
+        </div>
+        <?php endif; ?>
+    </div>
+    <?php endforeach; ?>
+</div>

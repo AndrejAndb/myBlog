@@ -1,13 +1,83 @@
 <?php
-?><!DOCTYPE html>
+$this->headLink()->appendStylesheet('/style/screen.css');
+$this->headLink()->appendStylesheet('/style/layout.css');
+$this->headLink()->appendStylesheet('/style/print.css', 'print');
+$this->headLink()->appendStylesheet('/style/ie.css', 'screen', 'lt IE 8');
+$this->headLink()->appendStylesheet('/style/tagcloud.css');
+$this->headTitle('Andrej Andb - Блог web-разработчика');
+$this->headTitle()->setSeparator(' / ');
+$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8');
+?><?php echo $this->doctype() ?>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>ACMS - prototype</title>
+        <?php echo $this->headMeta(); ?>
+        <?php echo $this->headTitle(); ?>
+        <?php echo $this->navigation()->links(); ?>
         <?php echo $this->headLink(); ?>
         <?php echo $this->headScript(); ?>
+        <?php echo $this->headStyle() ?>
     </head>
     <body>
-       <?php echo $this->raw('content'); ?> 
+        <div id="page-wrapper">
+            <div id="header">
+                <div class="w1">
+                    <div class="w2">
+                        <div class="wrap">
+                            <div id="site-name">
+                                <div class="site-title">
+                                    <a href="/">Andrej Andb</a>
+                                </div>
+                                <div class="site-description">
+                                    <a href="/">Блог web-разработчика</a>
+                                </div>
+                            </div>
+                            <div class="toplinks">
+                                <a class="mail" href="mailto:andrej.andb@gmail.com">andrej.andb@gmail.com</a>
+                                <a class="rss" href="<?php echo $this->url('Home/rss'); ?>" title="RSS">RSS</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="center" class="two-column">
+                <div class="wrap">
+                    <div class="center-wrap">
+                        <div class="center-block">
+                            <div class="block-wrap">
+                                <?php echo $this->raw('content'); ?> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-block">
+                        <div class="block-wrap">
+                            <div class="tags-menu">
+                                <div class="header">Тэги:</div>
+                                <?php echo $this->tagsmenu() ?>
+                                <div class="menu-right">
+                                    <ul class="layout">
+                                        <li>
+                                            <a href="/">Последние записи</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-block">
+                        <div class="block-wrap">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="bottom">
+                <div class="w1">
+                    <div class="w2">
+                        <div class="wrap">
+                            Copyright © 2011, <a href="mailto:andrej.andb@gmail.com">andrej.andb@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

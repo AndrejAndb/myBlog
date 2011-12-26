@@ -1,0 +1,14 @@
+<?php
+$this->headLink()->appendStylesheet('/style/tagcloud.css');
+$this->headTitle('Тэги');
+?>
+<h1 class="page-title">Все метки</h1>
+<div class="tagcloud">
+    <?php 
+        $this->tags->getTagDecorator()->setFontSizeUnit('%')->setMaxFontSize(400)->setMinFontSize(150);
+        $this->tags->getCloudDecorator()->setHTMLTags(array(
+            'ul' => array('class' => 'cloud')
+        ));
+    ?>
+    <?php echo $this->tags ;?>
+</div>

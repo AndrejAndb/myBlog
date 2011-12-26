@@ -1,0 +1,40 @@
+ul.cloud {
+    margin: 0px 0px 10px 0px;
+    padding: 0px;
+    list-style: none;
+}
+ul.cloud li {
+    display: inline;
+    padding: 0px 2px;
+}
+
+ul.cloud-menu {
+    margin-bottom: 10px;
+    border-right: 1px solid #C8C8C8;
+}
+ul.cloud-menu li {
+    text-align: right;
+    padding: 2px 10px 2px 2px;
+}
+ul.cloud-menu a {
+    font-size: 120%;
+}
+ul.cloud-menu a:hover {
+    
+}
+ul.cloud-menu a.tag3 {
+    
+}
+ul.cloud-menu a.tag2 {
+    
+}
+ul.cloud-menu a.tag1 {
+    
+}
+
+ul.cloud-tags {
+    
+}
+ul.cloud-tags li {
+    display: inline;
+}

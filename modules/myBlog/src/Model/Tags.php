@@ -40,6 +40,48 @@ class Tags extends \Zend\Db\Table\AbstractTable {
         return $list;
     }
     
+    public function getByTags(array $tags) {
+        $list = new \Zend\Tag\ItemList();
+        
+        $select = $this->select();
+        $adapter = $this->getAdapter();
+        $tableName = $adapter->quoteIdentifier($this->_name);
+        $tags = array_map(array($adapter, 'quote'), $tags);
+        $select->from(array('tag'=>$this->_name))
+                ->columns(array(
+                    'COUNT(tag.tag) as weight'
+                    ))
+                ->where('tag.tag in ('. implode(',',$tags).')')
+                ->group('tag');
+        $rows = $this->fetchAll($select);
+        foreach($rows as $row) {
+            $list[] = new \Zend\Tag\Item(array(
+                'Title' => $row->tag,
+                'Weight' => $row->weight
+            ));
+        }
+        return $list;
+    }
+    
+    public function getAllTags() {
+        $list = new \Zend\Tag\ItemList();
+        
+        $select = $this->select();
+        $adapter = $this->getAdapter();
+        $tableName = $adapter->quoteIdentifier($this->_name);
+        $select->from(array('tag'=>$this->_name))->columns(array(
+            '(SELECT COUNT(*) FROM '.$tableName.' WHERE tag = tag.tag) AS weight'
+        ))->group('tag');
+        $rows = $this->fetchAll($select);
+        foreach($rows as $row) {
+            $list[] = new \Zend\Tag\Item(array(
+                'Title' => $row->tag,
+                'Weight' => $row->weight
+            ));
+        }
+        return $list;
+    }
+    
     public function deleteForId($id) {
         $where = $this->getAdapter()->quoteInto('id = ?', $id);
         $this->delete($where);

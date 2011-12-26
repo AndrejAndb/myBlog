@@ -9,6 +9,8 @@ class Feed extends \Zend\Db\Table\AbstractTable {
     
     protected $_rowClass = '\myBlog\Model\FeedItem';
     
+    protected $converter = null;
+    
     public function init() {
         
     }
@@ -21,6 +23,14 @@ class Feed extends \Zend\Db\Table\AbstractTable {
     public function getLocator()
     {
         return $this->locator;
+    }
+    
+    public function getConverter() {
+        if($this->converter == null) {
+            $this->converter = new \myBlog\Xslt\Convert();
+        }
+        
+        return $this->converter;
     }
     
     public function createItem($data) {
@@ -44,6 +54,14 @@ class Feed extends \Zend\Db\Table\AbstractTable {
         return $item;
     }
     
+    public function getFromSlug($slug) {
+        $select = $this->select();
+        $adapter = $this->getAdapter();
+        $tableName = $adapter->quoteIdentifier($this->_name);
+        $select ->where('status = "PUBLISHED"')
+                ->where('slug = ?', $slug);
+        return $this->fetchRow($select);
+    }
     
     public function saveItem($data, $id) {
         
@@ -72,6 +90,26 @@ class Feed extends \Zend\Db\Table\AbstractTable {
     public function getAll() {
         $select = $this->select();
         $select->order('created desc');
+        return $this->fetchAll($select);
+    }
+    
+    public function getPosts(\Zend\Tag\ItemList $tags = null, $count = 10, $offset = 0) {
+        $select = $this->select();
+        $adapter = $this->getAdapter();
+        $select->where('status = "PUBLISHED"')
+                ->order('created desc')
+                ->limit($count, $offset);
+        
+        if($tags !== null) {
+            $tagsArr = array();
+            foreach($tags as $tag) {
+                $tagsArr[] = $tag->getTitle();
+            }
+            $tagsArr = array_map(array($adapter, 'quote'), $tagsArr);
+            
+            $select->where("(SELECT COUNT(*) FROM tags WHERE tags.id = CONCAT('feed-',feed.id) AND tags.tag IN (".  implode(',', $tagsArr).") ) > 0");
+        }
+        
         return $this->fetchAll($select);
     }
     

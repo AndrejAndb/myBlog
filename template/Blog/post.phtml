@@ -1,0 +1,95 @@
+<?php
+$thisURL = $this->url('Home/post',array('slug'=>$this->post['slug']), array('absolute'=>true));
+$this->headLink()->appendStylesheet('/style/post.css');
+$this->navigation()->links(new \Zend\Navigation\Navigation(array(
+    array(
+        'type' => 'uri',
+        'active' => true,
+        'uri' => $thisURL,
+        'rel'   => array(
+            'canonical' => $thisURL
+        )
+    ))));
+
+$this->headTitle($this->post['title']);
+?>
+<?php $this->headScript()->captureStart();?>
+window.___gcfg = {lang: 'ru'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+<?php $this->headScript()->captureEnd() ?>
+<?php $keywords = array(); ?>
+<h1 class="page-title">
+    <?php echo $this->post['title'] ?>
+</h1>
+<div class="post single-post">
+    <div class="content short-content">
+        <?php echo $this->post['short'] ?>
+    </div>
+    <div class="content full-content">
+        <?php echo $this->post['text'] ?>
+    </div>
+    <div class="post-property">
+        <ul class="layout">
+            <?php $date = date('d.m.Y', $this->post['createdStamp']);  ?>
+            <?php $dateM = date('d.m.Y', $this->post['modifiedStamp']) ?>
+            <?php if($dateM != $date): ?>
+            <li class="modify-data">
+                <span class="title">Изменен:</span> <?php echo $dateM; ?>
+            </li>
+            <?php endif; ?>
+            <li class="create-data">
+                <span class="title">Опубликован:</span> <?php echo $date; ?>
+            </li>
+        </ul>
+    </div>
+    <?php
+        $tags = array(); 
+        foreach($this->post['tags'] as $tag){
+           $tags[] = '<a href="'.$this->url('Home/tags', array('tags'=>$tag->getTitle())).'" class="tag">'.$tag->getTitle().'</a>';
+           $keywords[] = $tag->getTitle();
+        }
+    ?>
+    <div class="cont-bot-block">
+        <?php if(count($tags)>0):?>
+        <div class="post-tags">
+            <span class="title">Тэги:</span>
+            <?php echo implode(', ', $tags); ?>
+        </div>
+        <?php endif; ?>
+        <div class="post-bottom">
+            <ul class="layout share">
+                <li class="vk">
+                    <a href="http://vkontakte.ru/share.php?url=<?php echo $thisURL; ?>" title="Поделиться во ВКонтакте" onclick="window.open(this.href, 'Поделиться во ВКонтакте', 'width=800,height=300'); return false">Поделиться во ВКонтакте</a>
+                </li>
+                <li class="fb">
+                    <a href="http://www.facebook.com/sharer.php?u=<?php echo $thisURL; ?>" title="Поделиться в Facebook" onclick="window.open(this.href, 'Поделиться в Facebook', 'width=800,height=300'); return false">Поделиться в Facebook</a>
+                </li>
+                <li class="tw">
+                    <a href="http://twitter.com/intent/tweet?text=<?php echo $thisURL; ?><?php echo htmlentities(' '.$this->post['title'].' #AndrejAndb', ENT_COMPAT, 'utf-8') ?>" title="Поделиться в Twitter" target="_blank">Поделиться в Twitter</a>
+                </li>
+                <li class="gg">
+                    <div class="g-plusone" data-size="small"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<?php
+$this->headMeta()->appendName('keywords', $this->post['keywords'] .', '.implode(', ', $keywords));
+$this->headMeta()->appendName('description', $this->post['description']);
+?>
+<?php if(strlen(trim($this->post['js']))>0):?>
+  <?php $this->headScript()->captureStart();?>
+  <?php echo $this->post['js'] ?>
+  <?php $this->headScript()->captureEnd() ?>
+<?php endif; ?>
+<?php if(strlen(trim($this->post['css']))>0):?>
+  <?php $this->headStyle()->captureStart();?>
+  <?php echo $this->post['css'] ?>
+  <?php $this->headStyle()->captureEnd() ?>
+<?php endif; ?>

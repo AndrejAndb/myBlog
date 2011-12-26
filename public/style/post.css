@@ -1,0 +1,106 @@
+.posts {
+    
+}
+.posts .post {
+    margin-bottom: 40px;
+}
+
+.post {
+    
+}
+.post .more {
+    margin-bottom: 3px;
+}
+h2.postTitle {
+    font: normal 200%/1.1em Verdana, Tahoma, sans-serif;
+    margin-bottom: 0px;
+}
+h2.postTitle a {
+    color: #4D7285;
+    
+}
+h2.postTitle a:hover {
+    color: #6DA3BD;
+}
+.post-property {
+    padding: 5px 10px 10px 0px;
+}
+.post-property ul {
+}
+.post-property li {
+    text-align: right;
+    color: #666;
+    font-style: italic;
+    font-size: 90%;
+    font-weight: bold;
+}
+.post-property li .title {
+    font-weight: normal;
+}
+.post-property li.modify-data {
+    
+}
+.post-property li.create-data {
+    
+}
+.post .content {
+    font-size: 110%;
+    margin-bottom: 10px;
+    line-height: 160%;
+    font-family: Verdana, sans-serif;
+}
+.post .short-content {
+    
+}
+.post-tags {
+}
+
+.post-tags .tag {
+    
+}
+.post-tags .title {
+    font-weight: bold;
+}
+.cont-bot-block {
+    border-top: 1px solid #C8C8C8;
+    border-bottom: 1px solid #C8C8C8;
+    margin: 0px -10px;
+    padding: 0px 10px;
+}
+.post-bottom {
+    margin: 10px 0px 5px 0px;
+}
+.post-bottom ul.share {
+    
+}
+.post-bottom ul.share,
+.post-bottom ul.share li,
+.post-bottom ul.share li a {
+    height: 20px;
+}
+.post-bottom ul.share li {
+    width: 20px;
+    margin-right: 8px;
+    float: left;
+}
+.post-bottom ul.share li a {
+    text-decoration: none;
+    display: block;
+    overflow: hidden;
+    text-indent: -9999px;
+}
+.post-bottom ul.share li a:hover {
+    text-decoration: none;
+}
+.post-bottom ul.share li.vk a {
+    background: url('img/vkontakte-s.png') no-repeat;
+}
+.post-bottom ul.share li.fb a {
+    background: url('img/facebook-s.png') no-repeat;
+}
+.post-bottom ul.share li.tw a {
+    background: url('img/twitter-s.png') no-repeat;
+}
+.post-bottom ul.share li.gg {
+    padding-top: 3px; 
+}

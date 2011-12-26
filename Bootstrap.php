@@ -26,24 +26,32 @@ class Bootstrap extends ZendBootstrap
         
         $listenerOptions  = new \Zend\Module\Listener\ListenerOptions($appConfig['module_listener_options']);
         $defaultListeners = new \Zend\Module\Listener\DefaultListenerAggregate($listenerOptions);
+        $config = $defaultListeners->getConfigListener();
+        $config->addConfigGlobPaths($appConfig['globConfPath']);
 
-        //$defaultListeners->getConfigListener()->addConfigGlobPath('config/autoload/*.config.php');
         $moduleManager->events()->attachAggregate($defaultListeners);
         $moduleManager->loadModules();
         $this->unregisterModuleAutoloader();
-        parent::__construct($defaultListeners->getConfigListener()->getMergedConfig());
+        parent::__construct($config->getMergedConfig());
     }
     
     protected function getAppConfig() {
         return array(
             'modules' => array(
 		'myblog',
+                'EdpCommon',
+                'EdpUser',
             ),
-            'module_listener_options' => array( 
-                'config_cache_enabled' => false,
-                'cache_dir'            => realpath(__DIR__ . '/data/cache'),
+            'globConfPath' => array(
+                realpath(__DIR__ . '/config').'/*.php',
+            ),
+            'module_listener_options' => array(
+                'ConfigCacheEnabled' => false,
+                'CacheDir'            => realpath(__DIR__ . '/data/cache'),
+                'ConfigCacheKey' => 'cache',
                 'module_paths' => array(
                     realpath(__DIR__ . '/modules'),
+                    realpath(__DIR__ . '/../zfModules')
                 ),
             ),
         );

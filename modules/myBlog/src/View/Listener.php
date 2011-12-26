@@ -8,7 +8,7 @@ use ArrayAccess,
     Zend\EventManager\ListenerAggregate,
     Zend\EventManager\StaticEventCollection,
     Zend\EventManager\StaticEventManager,
-    Zend\Http\Response,
+    Zend\Http\PhpEnvironment\Response as Response,
     Zend\Mvc\Application,
     Zend\Mvc\MvcEvent,
     Zend\View\PhpRenderer as Renderer;
@@ -156,7 +156,6 @@ class Listener implements ListenerAggregate
         
         $controller = $routeMatch->getParam('controller', 'default');
         $action     = $routeMatch->getParam('action', 'index');
-        $templateVariation     = $routeMatch->getParam('templateVariation', 'default');
         
         $script = $controller . DIRECTORY_SEPARATOR . $action. '.phtml';
 
@@ -230,7 +229,7 @@ class Listener implements ListenerAggregate
 
         $vars = array('message' => 'Page not found.');
 
-        $content = $this->view->render('pages/404.phtml', $vars);
+        $content = $this->view->render('error/notfound.phtml', $vars);
 
         $e->setResult($content);
 
@@ -254,6 +253,7 @@ class Listener implements ListenerAggregate
                     'message' => 'Page not found.',
                 );
                 $response->setStatusCode(404);
+                $content = $this->view->render('error/notfound.phtml', $vars);
                 break;
 
             case Application::ERROR_EXCEPTION:
@@ -265,11 +265,10 @@ class Listener implements ListenerAggregate
                     'display_exceptions' => $this->displayExceptions(),
                 );
                 $response->setStatusCode(500);
+                $content = $this->view->render('error/index.phtml', $vars);
                 break;
         }
-
-        $content = $this->view->render('error/index.phtml', $vars);
-
+        
         $e->setResult($content);
 
         return $this->renderLayout($e);

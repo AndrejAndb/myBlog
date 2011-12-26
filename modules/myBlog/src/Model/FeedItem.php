@@ -60,4 +60,25 @@ class FeedItem extends \Zend\Db\Table\AbstractRow {
         }
         return false;
     }
+    
+    public function getShort() {
+        return $this->getConverter()->getSite($this->short);
+    }
+    
+    public function getText() {
+        return $this->getConverter()->getSite($this->text);
+    }
+    
+    public function getShortRss() {
+        return $this->getConverter()->getRss($this->short);
+    }
+    
+    public function getTextRss() {
+        return $this->getConverter()->getRss($this->text);
+    }
+    
+    protected function getConverter() {
+        return $this->getTable()->getConverter();
+    }
+    
 }
