@@ -20,6 +20,15 @@ class TagsMenu extends \Zend\View\Helper\AbstractHelper
     
     public function __invoke()
     {
+        
+        
+        /*$config = \Zend\EventManager\GlobalEventManager::trigger('getLoadedModules', $this)->last();
+        var_dump($config);
+        
+        $config = \Zend\EventManager\GlobalEventManager::trigger('getApplication', $this)->last();
+        var_dump($config);*/
+        
+        
         $tagsDB = $this->getLocator()->get('myBlog\Model\Tags');
         $ItemList = $tagsDB->getAllTags();
         $ItemList = iterator_to_array($ItemList);

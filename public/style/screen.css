@@ -50,7 +50,11 @@ abbr, acronym {border-bottom:1px dotted #666;}
 address {margin:0 0 1.5em;font-style:italic;}
 del {color:#666;}
 pre {margin:1.5em 0;white-space:pre;}
-pre, code, tt {font:1em 'andale mono', 'lucida console', monospace;line-height:1.5;}
+pre, code, tt {font:100% 'Bitstream Vera Sans Mono','Courier New',monospace; line-height: 125%;}
+code {
+    font-weight: bold;
+    color: #111;
+}
 li ul, li ol {margin:0;}
 ul, ol {margin:0 1.5em 1.5em 0;padding-left:1.5em;}
 ul {list-style-type:disc;}

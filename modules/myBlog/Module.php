@@ -157,11 +157,13 @@ class Module implements \Zend\Module\Consumer\AutoloaderProvider
                 $app  = $e->getTarget();
                 $authService = $app->getLocator()->get('edpuser_user_service')->getAuthService();
                 if (!($authService->hasIdentity() && $authService->getIdentity()->getUserId() == 1)) {
-                    $routeMatch->setParam('controller', 'access_deny');
-                    $routeMatch->setParam('action', 'index');
+                    $e->setError(403);
+                    $app->events()->trigger('dispatch.error', $e);
+                    $e->stopPropagation();
                 }
             }
         }
+        return $e->getResponse();
     }
     public function initializeView($e){
         $app          = $e->getParam('application');

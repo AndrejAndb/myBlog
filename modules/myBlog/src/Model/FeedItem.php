@@ -62,19 +62,56 @@ class FeedItem extends \Zend\Db\Table\AbstractRow {
     }
     
     public function getShort() {
-        return $this->getConverter()->getSite($this->short);
+        $xml = $this->getXmlContent($this->short);
+        if($xml == null) {
+            return $this->short;
+        }
+        return $this->getConverter()->getSite($xml);
     }
     
     public function getText() {
-        return $this->getConverter()->getSite($this->text);
+        $xml = $this->getXmlContent($this->text);
+        if($xml == null) {
+            return $this->text;
+        }
+        return $this->getConverter()->getSite($xml);
     }
     
     public function getShortRss() {
-        return $this->getConverter()->getRss($this->short);
+        $xml = $this->getXmlContent($this->short);
+        if($xml == null) {
+            return $this->short;
+        }
+        return $this->getConverter()->getRss($xml);
     }
     
     public function getTextRss() {
-        return $this->getConverter()->getRss($this->text);
+        $xml = $this->getXmlContent($this->text);
+        if($xml == null) {
+            return $this->text;
+        }
+        return $this->getConverter()->getRss($xml);
+    }
+    
+    protected function getXmlContent($text) {
+        $xml = new \DOMDocument('1.0', 'utf-8');
+        try {
+            if(@$xml->loadXML($text) == false){
+                throw new \Exception();
+            }
+
+        } catch (\Exception $e) {
+            return null;
+        }
+        $xpath = new \DOMXpath($xml);
+        $items = $xpath->query('/document');
+        $url = $this->getTable()->getLocator()->get('view')->url('Home/post', array('slug' => $this->slug), array('absolute'=>true));
+        foreach ($items as $item) {
+            $item->setAttributeNode(new \DOMAttr('link', $url));
+            
+        }
+        
+        return $xml;
     }
     
     protected function getConverter() {

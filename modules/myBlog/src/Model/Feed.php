@@ -26,11 +26,7 @@ class Feed extends \Zend\Db\Table\AbstractTable {
     }
     
     public function getConverter() {
-        if($this->converter == null) {
-            $this->converter = new \myBlog\Xslt\Convert();
-        }
-        
-        return $this->converter;
+        return $this->getLocator()->get('myBlog\Xslt\Convert');
     }
     
     public function createItem($data) {

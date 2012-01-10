@@ -104,3 +104,68 @@ h2.postTitle a:hover {
 .post-bottom ul.share li.gg {
     padding-top: 3px; 
 }
+.post .content .post-image {
+    float: left;
+    max-width: 250px;
+    max-height: 250px;
+    margin: 0px 10px 10px 0px;
+}
+
+
+.title-link-anchor {
+    font-size: .8em;
+    color: #DCDCDC;
+    text-decoration: none;
+}
+.title-link-anchor:hover {
+    color: #6DA3BD;
+    text-decoration: none;
+}
+
+.example {
+    border-right: 1px solid #C8C8C8;
+    border-bottom: 1px solid #C8C8C8;
+    position: relative;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+.example .example-title {
+    font: 150% Georgia,"Times New Roman",Times,serif;
+    color: #4D7285;
+    margin: -10px -10px 10px -10px;
+}
+
+.sources-code {
+    padding: 10px 5px 20px 5px;
+    overflow: auto;
+    border-right: 1px solid #C8C8C8;
+    margin-bottom: 10px;
+}
+.sources-code table {
+    margin: 0px;
+}
+.sources-code pre {
+    margin: 0px;
+    padding: 5px 0px;
+}
+.sources-code td.code {
+    width: 99%;
+}
+.sources-code .code pre {
+    padding-left: 5px;
+}
+.sources-code .linenodiv pre {
+    padding-right: 5px;
+    text-align: right;
+}
+.sources-code td.linenos {
+    background-color: transparent;
+    padding: 0px;
+    border-right: 1px solid #C8C8C8
+}
+.sources-code td.linenos a {
+    text-decoration: none;
+}
+.sources-code td.linenos a:hover {
+    text-decoration: none;
+}

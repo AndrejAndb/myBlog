@@ -20,7 +20,6 @@ class Bootstrap extends ZendBootstrap
 
     public function __construct() {
 	$this->initStandartAutoloader(); // Инициализируем стандартный автозагрузчик
-	$this->initModuleAutoloader(); // Инициализируем автозагрузчик модулей (который загружает файлы вида /Module.php)
         $appConfig = $this->getAppConfig();
         $moduleManager = new \Zend\Module\Manager($appConfig['modules']);
         
@@ -31,16 +30,16 @@ class Bootstrap extends ZendBootstrap
 
         $moduleManager->events()->attachAggregate($defaultListeners);
         $moduleManager->loadModules();
-        $this->unregisterModuleAutoloader();
         parent::__construct($config->getMergedConfig());
     }
     
     protected function getAppConfig() {
         return array(
             'modules' => array(
-		'myblog',
+		'myBlog',
                 'EdpCommon',
                 'EdpUser',
+                'Application',
             ),
             'globConfPath' => array(
                 realpath(__DIR__ . '/config').'/*.php',
@@ -62,16 +61,6 @@ class Bootstrap extends ZendBootstrap
         AutoloaderFactory::factory(array(
             'Zend\Loader\StandardAutoloader' => array()
         ));
-    }
-    protected function initModuleAutoloader() {
-        AutoloaderFactory::factory(array(
-            'Zend\Loader\ModuleAutoloader' => array(
-                'myblog' => realpath(__DIR__ . '/modules/myBlog'),
-                )
-        ));
-    }
-    protected function unregisterModuleAutoloader() {
-        AutoloaderFactory::unregisterAutoloader('Zend\Loader\ModuleAutoloader');
     }
 
 }

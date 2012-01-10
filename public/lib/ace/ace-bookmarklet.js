@@ -14191,7 +14191,7 @@ var RenderLoop = function(onRender, win) {
 
 exports.RenderLoop = RenderLoop;
 });
-__ace_shadowed__.define("text!ace/css/editor.css", [], "@import url(//fonts.googleapis.com/css?family=Droid+Sans+Mono);\n" +
+__ace_shadowed__.define("text!ace/css/editor.css", [], "/*@import url(//fonts.googleapis.com/css?family=Droid+Sans+Mono);*/\n" +
   "\n" +
   "\n" +
   ".ace_editor {\n" +

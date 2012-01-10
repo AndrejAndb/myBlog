@@ -14,6 +14,7 @@ class Tags extends \Zend\Db\Table\AbstractTable {
     public function updateForId($id, \Zend\Tag\ItemList $list) {
         $adapter = $this->getAdapter();
         $tableName = $adapter->quoteIdentifier($this->_name);
+        $this->deleteForId($id);
         foreach ($list as $tag) {
             
             $adapter->query('REPLACE INTO '.$tableName.' (id, tag) VALUES (?, ?)', array($id, $tag->getTitle()));

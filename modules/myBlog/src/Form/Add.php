@@ -20,7 +20,7 @@ class Add extends ZendForm {
         $tags->setRequired(false)->setLabel('Тэги');
         
         $description = $this->createElement('text', 'description');
-        $description->setRequired(true)->setLabel('Описание')->setAttrib('rows', '5');
+        $description->setRequired(false)->setLabel('Описание')->setAttrib('rows', '5');
         
         
         $short = $this->createElement('textarea', 'short');

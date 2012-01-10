@@ -242,11 +242,18 @@ class Listener implements ListenerAggregate
         $app      = $e->getTarget();
         $response = $e->getResponse();
         if (!$response) {
-            $response = new Response();
+            $response = new \Zend\Http\PhpEnvironment\Response();
             $e->setResponse($response);
         }
 
         switch ($error) {
+            case 403:
+                $vars = array(
+                    'message' => 'Доступ запрещен.',
+                );
+                $response->setStatusCode(403);
+                $content = $this->view->render('error/access.phtml', $vars);
+                break;
             case Application::ERROR_CONTROLLER_NOT_FOUND:
             case Application::ERROR_CONTROLLER_INVALID:
                 $vars = array(
